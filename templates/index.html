@@ -1,0 +1,44 @@
+{% extends 'layout.html'%}
+
+{% block body %}
+    
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+{% endif%}
+{%endwith%}
+
+<div class="container">
+    <form class="formulario" action="/add" method="POST">
+
+        <input class="input-u" name="fullname"type="text" placeholder="Ingresa el nombre completo" >
+        <input class="input-u" name="phone" type="text" placeholder="Ingresa el">
+        <input class="input-u" name="email" type="text" placeholder="Ingresa el">
+        
+        <input class="btn" type="submit" value="Cargar contacto">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <td>Nombre</td>
+                <td>Telefono</td>
+                <td>Email</td>
+                <td>Opciones</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contacto in contactos %}
+            <tr>
+                <td>{{contacto.1}}</td>
+                <td>{{contacto.2}}</td>
+                <td>{{contacto.3}}</td>
+                <td><a href="/edit/{{contacto.0}}">Editar</a>
+                    <a href="/delete/{{contacto.0}}">Borrar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

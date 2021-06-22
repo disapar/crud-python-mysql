@@ -1,0 +1,20 @@
+{% extends 'layout.html'%}
+
+{% block body %}
+
+<div class="container">
+    <form class="formulario todo" action="/update" method="POST">
+        <input type="text" value="{{editor.0}}" name="id" hidden>
+        <input value="{{editor.1}}" class="input-u" name="fullname" type="text" placeholder="Ingresa el nombre completo"  >
+        <input value="{{editor.2}}"  class="input-u" name="phone" type="text" placeholder="Ingresa el">
+        <input value="{{editor.3}}" class="input-u" name="email" type="text" placeholder="Ingresa el">
+        
+        <input class="btn" type="submit" value="Editar contacto">
+
+    
+    </form>
+    
+</div>
+</body>
+</html>
+{% endblock %}
