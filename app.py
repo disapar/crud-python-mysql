@@ -3,9 +3,13 @@ from model import *
 from database import *
 
 
+@app.errorhandler(404)
+def erroPage(e):
+    return nofound()
+
 @app.route('/')
 def home():
-    return Index()
+    return index()
 
 @app.route('/add', methods=['POST'])
 def add():

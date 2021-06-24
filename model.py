@@ -1,10 +1,8 @@
 from flask import  render_template, request, redirect, url_for, flash
-import database
-
-mysql = database.mysql
+from database import mysql
 
 
-def Index():
+def index():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM contacts')
     data = cur.fetchall()
@@ -67,3 +65,6 @@ def delete(id):
     flash('usuario eliminado correcto')
     return redirect(url_for('home'))
 
+
+def nofound():
+    return render_template('error.html'), 404
