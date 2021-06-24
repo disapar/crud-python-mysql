@@ -1,15 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_mysqldb import MySQL
 
+import database
 
-app = Flask(__name__)
-app.config['MYSQL_HOST']='localhost'
-app.config['MYSQL_USER']='root'
-app.config['MYSQL_PASSWORD']=''
-app.config['MYSQL_DB'] = 'crud_python'
-mysql =MySQL(app)
+mysql = database.mysql
+app = database.app
 
-app.secret_key = 'mysecretkey'
 
 @app.route('/')
 def Index():
@@ -22,15 +17,22 @@ def Index():
 @app.route('/add', methods=['POST'])
 def addcontact():
     if request.method == 'POST':
+        cur= mysql.connection.cursor()
         fullname = request.form['fullname']
         phone = request.form['phone']
         email = request.form['email']
-        cur= mysql.connection.cursor()
-        cur.execute('INSERT INTO contacts (name, phone, email) VALUES(%s,%s,%s)', 
-        (fullname, phone, email))    
-        mysql.connection.commit()
-        flash('Contacto agregado con exito')
-        return redirect(url_for('Index'))
+        if fullname == "":
+            flash('Debes agregar un nombre')           
+        if phone == "":
+            flash('Debes agregar un telefono')  
+        if email == "":
+            flash('Debes agregar un email valido')
+        else:
+            cur.execute('INSERT INTO contacts (name, phone, email) VALUES(%s,%s,%s)', 
+            (fullname, phone, email))    
+            mysql.connection.commit()
+            flash('Contacto agregado con exito')
+        return redirect(url_for('Index'))    
 
 
 @app.route('/edit/<id>')
