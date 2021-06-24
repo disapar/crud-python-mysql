@@ -69,6 +69,12 @@ tr {
     grid-column-gap: 20px;
     grid-row-gap: 20px;
 }
+p.alerta {
+    padding: 10px;
+    background: #aef165;
+    font-size: 14px;
+    color: #51732d;
+}
 thead {
     table-layout: auto;
     background: #666;

@@ -1,44 +1,45 @@
-{% extends 'layout.html'%}
-
-{% block body %}
-    
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<p>{{message}}</p>
-{% endfor %}
-{% endif%}
-{%endwith%}
+{% extends 'layout.html'%} {% block body %}
 
 <div class="container">
-    <form class="formulario" action="/add" method="POST">
+  
+  <form class="formulario" action="/add" method="POST">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message
+        in messages %}
+        <p class="alerta">{{message}}</p>
+        {% endfor %} {% endif%} {%endwith%}
+    <input
+      class="input-u"
+      name="fullname"
+      type="text"
+      placeholder="Ingresa el nombre completo"
+    />
+    <input class="input-u" name="phone" type="number" placeholder="Ingresa el telefono" />
+    <input class="input-u" name="email" type="email" placeholder="Ingresa el email" />
 
-        <input class="input-u" name="fullname"type="text" placeholder="Ingresa el nombre completo" >
-        <input class="input-u" name="phone" type="text" placeholder="Ingresa el">
-        <input class="input-u" name="email" type="text" placeholder="Ingresa el">
-        
-        <input class="btn" type="submit" value="Cargar contacto">
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <td>Nombre</td>
-                <td>Telefono</td>
-                <td>Email</td>
-                <td>Opciones</td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for contacto in contactos %}
-            <tr>
-                <td>{{contacto.1}}</td>
-                <td>{{contacto.2}}</td>
-                <td>{{contacto.3}}</td>
-                <td><a href="/edit/{{contacto.0}}">Editar</a>
-                    <a href="/delete/{{contacto.0}}">Borrar</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <input class="btn" type="submit" value="Cargar contacto" />
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <td>Nombre</td>
+        <td>Telefono</td>
+        <td>Email</td>
+        <td>Opciones</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contacto in contactos %}
+      <tr>
+        <td>{{contacto.1}}</td>
+        <td>{{contacto.2}}</td>
+        <td>{{contacto.3}}</td>
+        <td>
+          <a href="/edit/{{contacto.0}}">Editar</a>
+          <a href="/delete/{{contacto.0}}">Borrar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}
