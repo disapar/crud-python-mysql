@@ -11,7 +11,7 @@ def Index():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM contacts')
     data = cur.fetchall()
-    print(data)
+    
     return render_template('index.html', contactos = data)
 
 @app.route('/add', methods=['POST'])
@@ -22,11 +22,14 @@ def addcontact():
         phone = request.form['phone']
         email = request.form['email']
         if fullname == "":
-            flash('Debes agregar un nombre')           
+            flash('Debes agregar un nombre')
+            return redirect(url_for('Index'))            
         if phone == "":
-            flash('Debes agregar un telefono')  
+            flash('Debes agregar un telefono')
+            return redirect(url_for('Index'))   
         if email == "":
             flash('Debes agregar un email valido')
+            return redirect(url_for('Index')) 
         else:
             cur.execute('INSERT INTO contacts (name, phone, email) VALUES(%s,%s,%s)', 
             (fullname, phone, email))    
@@ -62,8 +65,6 @@ def update():
         flash('Contacto actualizado')
         mysql.connection.commit()
         return redirect(url_for('Index'))
-
-
 
 
 @app.route('/delete/<string:id>')
